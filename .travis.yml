@@ -1,0 +1,12 @@
+language: java
+
+before_install:
+  - git submodule update --init --recursive
+
+script: ./bin/run_tests.sh
+
+notifications:
+  email:
+    recipients:
+      - wramsey@pivotallabs.com
+    on_success: always
