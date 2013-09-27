@@ -9,4 +9,4 @@ notifications:
   email:
     recipients:
       - wramsey@pivotallabs.com
-    on_success: always
+    on_success: change
