@@ -27,6 +27,8 @@ public class StepUtils {
     public final static String DATA_CUSTODIAN_CONTEXT = "DataCustodian";
     public final static String DATA_CUSTODIAN_BASE_URL = BASE_URL + DATA_CUSTODIAN_CONTEXT;
     public final static String THIRD_PARTY_BASE_URL = BASE_URL + THIRD_PARTY_CONTEXT;
+    public static final String USERNAME = "alan";
+    public static final String PASSWORD = "koala";
 
 
     private static WebDriver driver = WebDriverSingleton.getInstance();;

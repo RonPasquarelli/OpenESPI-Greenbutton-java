@@ -123,4 +123,41 @@ public class RetailCustomerSteps extends BaseSteps {
         assertTrue(driver.getCurrentUrl().contains("RetailCustomer"));
         assertTrue(driver.getCurrentUrl().endsWith("/home"));
     }
+
+    @When("^I select a Data Custodian from the list$")
+    public void I_select_a_Data_Custodian_from_the_list() throws Throwable {
+        clickLink("Data Custodians");
+        clickByClass("data-custodian");
+        clickByName("next");
+    }
+
+    @When("^I log into Data Custodian$")
+    public void I_log_into_Data_Custodian() throws Throwable {
+        fillInByName("j_username", StepUtils.USERNAME);
+        fillInByName("j_password", StepUtils.PASSWORD);
+        clickByName("submit");
+    }
+
+    @Then("^I should see Scope selection screen$")
+    public void I_should_see_Scope_selection_screen() throws Throwable {
+        assertContains("Select Scope");
+        assertContains("FB_4_5_15_IntervalDuration_3600_BlockDuration_monthly_HistoryLength_13");
+    }
+
+    @When("^I select Scopes$")
+    public void I_select_Scope() throws Throwable {
+        clickByClass("scope");
+        clickByName("next");
+    }
+
+    @Then("^I should see authorization screen$")
+    public void I_should_see_authorization_screen() throws Throwable {
+        assertContains("Please Confirm");
+    }
+
+    @Then("^I should see all my authorizations$")
+    public void I_should_see_all_my_authorizations() throws Throwable {
+        assertContains("Authorizations");
+        assertContains("ConEdison");
+    }
 }
