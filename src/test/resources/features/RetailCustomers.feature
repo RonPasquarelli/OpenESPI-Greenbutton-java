@@ -3,12 +3,20 @@ Feature: Retail Customers
   I want to be able to view my usage point in my browser
   So that I can see my UsagePoints
 
-  Scenario: Retail Customers logs into Third Party
+  Scenario: Retail Customer authorizes Usage Points access
     Given I have a Retail Customer account
-    And There is a Third Party
 
-    When I log in as Alan Turing
-    And I click on the Select Third Party link
-    And I select the Third Party
+    When I log in as Alan Turing into Third Party
+    And I look at my Usage Points page
+    And I enter my username and password
+    And I authorize Third Party
+    Then I should see Usage Point with title "House meter"
 
-    Then I should be taken to the Third Party login page
+  Scenario: Retail Customer denies Usage Points access
+    Given I have a Retail Customer account
+
+    When I log in as Alan Turing into Third Party
+    And I look at my Usage Points page
+    And I enter my username and password
+    And I deny Third Party
+    Then I should be redirected to the home page

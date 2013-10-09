@@ -23,6 +23,11 @@ import org.openqa.selenium.WebElement;
 public class StepUtils {
 
     public final static String BASE_URL = "http://localhost:8080/";
+    public final static String THIRD_PARTY_CONTEXT = "ThirdParty";
+    public final static String DATA_CUSTODIAN_CONTEXT = "DataCustodian";
+    public final static String DATA_CUSTODIAN_BASE_URL = BASE_URL + DATA_CUSTODIAN_CONTEXT;
+    public final static String THIRD_PARTY_BASE_URL = BASE_URL + THIRD_PARTY_CONTEXT;
+
 
     private static WebDriver driver = WebDriverSingleton.getInstance();;
 
@@ -36,7 +41,6 @@ public class StepUtils {
     }
 
     public static void login(String context, String username, String password) {
-        navigateTo(context, "/logout.do");
         navigateTo(context, "/");
         WebElement loginLink = driver.findElement(By.id("login"));
         loginLink.click();

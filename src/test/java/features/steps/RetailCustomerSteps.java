@@ -17,33 +17,50 @@
 package features.steps;
 
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.runtime.PendingException;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import static features.steps.StepUtils.clickLinkByText;
 import static features.steps.StepUtils.selectRadioByLabel;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
-public class RetailCustomerSteps {
+public class RetailCustomerSteps extends BaseSteps {
 
     private WebDriver driver = WebDriverSingleton.getInstance();
 
     @Before
     public void setup() {
         XMLUnit.getControlDocumentBuilderFactory().setNamespaceAware(false);
+        driver.get(StepUtils.THIRD_PARTY_BASE_URL + "/j_spring_security_logout");
+        driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/logout.do");
+
+        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, "grace", "koala");
+        driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/custodian/removealltokens");
+
+        driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/logout.do");
     }
 
     @Given("^I have a Retail Customer account$")
     public void I_have_a_Retail_Customer_account() throws Throwable {
     }
 
-    @When("^I log in as Alan Turing$")
-    public void I_log_in_as_Alan_Turing() throws Throwable {
-        StepUtils.login("DataCustodian", "alan", "koala");
+    @When("^I log in as Alan Turing into Data Custodian$")
+    public void I_log_in_as_Alan_Turing_Data_Custodian() throws Throwable {
+        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, "alan", "koala");
+    }
+
+    @When("^I log in as Alan Turing into Third Party$")
+    public void I_log_in_as_Alan_Turing_Third_Party() throws Throwable {
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, "alan", "koala");
     }
 
     @When("^I click on the Select Third Party link$")
@@ -66,5 +83,44 @@ public class RetailCustomerSteps {
     public void I_should_be_taken_to_the_Third_Party_login_page() throws Throwable {
         assertNotNull("Login field missing", driver.findElement(By.name("j_username")));
         assertNotNull("Password field missing", driver.findElement(By.name("j_password")));
+    }
+
+    @When("^I look at my Usage Points page$")
+    public void I_look_at_my_usage_page() throws Throwable {
+        WebElement usagePointLink = driver.findElement(By.linkText("Usage Points"));
+        usagePointLink.click();
+    }
+
+    @Then("^I should see Usage Point with title \"([^\"]*)\"$")
+    public void I_should_see_my_Usage_Points_with_title(String title) throws Throwable {
+        assertTrue(driver.getPageSource().contains(title));
+    }
+
+    @And("^I enter my username and password$")
+    public void I_enter_my_username_and_password() throws Throwable {
+        WebElement usernameInput = driver.findElement(By.name("j_username"));
+        usernameInput.clear();
+        usernameInput.sendKeys("alan");
+        WebElement passwordInput = driver.findElement(By.name("j_password"));
+        passwordInput.clear();
+        passwordInput.sendKeys("koala");
+        WebElement login = driver.findElement(By.name("submit"));
+        login.click();
+    }
+
+    @When("^I authorize Third Party$")
+    public void I_authorize_Third_Party() throws Throwable {
+        clickByName("authorize");
+    }
+
+    @And("^I deny Third Party$")
+    public void I_deny_Third_Party() throws Throwable {
+        clickByName("deny");
+    }
+
+    @Then("^I should be redirected to the home page$")
+    public void I_should_be_redirected_to_the_home_page() throws Throwable {
+        assertTrue(driver.getCurrentUrl().contains("RetailCustomer"));
+        assertTrue(driver.getCurrentUrl().endsWith("/home"));
     }
 }
