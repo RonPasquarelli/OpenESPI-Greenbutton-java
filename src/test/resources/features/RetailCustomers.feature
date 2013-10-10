@@ -50,3 +50,33 @@ Feature: Retail Customers
 
     When I deny Third Party
     Then I should be redirected to the home page
+
+  Scenario: Retail Customer authorizes Scope from Data Custodian
+    Given I have a Retail Customer account
+
+    When I log in as Alan Turing into Data Custodian
+    And I select a Third Party from the list
+
+    When I log into Third Party
+    Then I should see Scope selection screen
+
+    When I select Scopes
+    Then I should see authorization screen
+
+    When I authorize Third Party
+    Then I should see all my authorizations
+
+  Scenario: Retail Customer denies Scope from Data Custodian
+    Given I have a Retail Customer account
+
+    When I log in as Alan Turing into Data Custodian
+    And I select a Third Party from the list
+
+    When I log into Third Party
+    Then I should see Scope selection screen
+
+    When I select Scopes
+    Then I should see authorization screen
+
+    When I deny Third Party
+    Then I should be redirected to the home page
