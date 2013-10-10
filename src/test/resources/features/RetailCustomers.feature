@@ -10,7 +10,7 @@ Feature: Retail Customers
     And I look at my Usage Points page
     And I enter my username and password
     And I authorize Third Party
-    Then I should see Usage Point with title "House meter"
+    Then I should see Usage Point with title "Front Electric Meter"
 
   Scenario: Retail Customer denies Usage Points access
     Given I have a Retail Customer account
