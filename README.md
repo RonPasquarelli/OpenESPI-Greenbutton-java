@@ -27,8 +27,8 @@ mvn tomcat7:run
 ```
 
 Now the applications should be available at:
- DataCustodian: [http://localhost:8080/DataCustodian](http://localhost:8080/DataCustodian).
- ThirdParty: [http://localhost:8080/ThirdParty](http://localhost:8080/ThirdParty).
+ - DataCustodian: [http://localhost:8080/DataCustodian](http://localhost:8080/DataCustodian).
+ - ThirdParty: [http://localhost:8080/ThirdParty](http://localhost:8080/ThirdParty).
 
 ### Eclipse Setup
 
