@@ -21,7 +21,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.PendingException;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,7 +29,6 @@ import org.openqa.selenium.WebElement;
 import static features.steps.StepUtils.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
 public class RetailCustomerSteps {
 
@@ -64,7 +62,7 @@ public class RetailCustomerSteps {
 
     @When("^I click on the Select Third Party link$")
     public void I_click_on_the_Select_Third_Party_link() throws Throwable {
-        clickLinkByText("Select Authorized Third Party");
+        clickLinkByText("Third Parties");
     }
 
     @Given("^There is a Third Party$")
@@ -158,5 +156,19 @@ public class RetailCustomerSteps {
     public void I_should_see_all_my_authorizations() throws Throwable {
         assertContains("Authorizations");
         assertContains("ConEdison");
+    }
+
+    @And("^I select a Third Party from the list$")
+    public void I_select_a_Third_Party_from_the_list() throws Throwable {
+        clickLinkByText("Third Parties");
+        clickByClass("third-party");
+        clickByName("next");
+    }
+
+    @When("^I log into Third Party$")
+    public void I_log_into_Third_Party() throws Throwable {
+        fillInByName("j_username", StepUtils.USERNAME);
+        fillInByName("j_password", StepUtils.PASSWORD);
+        clickByName("submit");
     }
 }
