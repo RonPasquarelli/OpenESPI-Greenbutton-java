@@ -27,13 +27,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static features.steps.StepUtils.clickLinkByText;
-import static features.steps.StepUtils.selectRadioByLabel;
+import static features.steps.StepUtils.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-public class RetailCustomerSteps extends BaseSteps {
+public class RetailCustomerSteps {
 
     private WebDriver driver = WebDriverSingleton.getInstance();
 
@@ -126,7 +125,7 @@ public class RetailCustomerSteps extends BaseSteps {
 
     @When("^I select a Data Custodian from the list$")
     public void I_select_a_Data_Custodian_from_the_list() throws Throwable {
-        clickLink("Data Custodians");
+        clickLinkByText("Data Custodians");
         clickByClass("data-custodian");
         clickByName("next");
     }

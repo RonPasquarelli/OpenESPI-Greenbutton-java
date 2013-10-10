@@ -20,6 +20,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static org.junit.Assert.assertTrue;
+
 public class StepUtils {
 
     public final static String BASE_URL = "http://localhost:8080/";
@@ -58,5 +60,25 @@ public class StepUtils {
 
     public static void selectRadioByLabel(String labelText) {
         driver.findElement(By.xpath("//label[contains(.,'" + labelText + "')]/input")).click();
+    }
+
+    protected static void clickByName(String name) {
+        WebElement submit = driver.findElement(By.name(name));
+        submit.click();
+    }
+
+    protected static void clickByClass(String className) {
+        WebElement radio = driver.findElement(By.className(className));
+        radio.click();
+    }
+
+    protected static void fillInByName(String name, String text) {
+        WebElement usernameInput = driver.findElement(By.name(name));
+        usernameInput.clear();
+        usernameInput.sendKeys(text);
+    }
+
+    protected static void assertContains(String text) {
+        assertTrue(driver.getPageSource().contains(text));
     }
 }
