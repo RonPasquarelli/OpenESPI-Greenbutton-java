@@ -18,7 +18,8 @@ Feature: Retail Customers
     When I look at my Usage Points page
     And I select Usage Point
     Then I should see Electric Power Usage Summary
-    Then I should see Electric Power Quality Summary
+    And I should see Electric Power Quality Summary
+    And I should see Local Time Parameters
 
     When I select Meter Reading
     Then I should see Meter Reading

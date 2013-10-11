@@ -178,4 +178,14 @@ public class StepUtils {
         upload.click();
     }
 
+    public static void submitLoginForm(String username, String password) {
+        WebElement usernameInput = driver.findElement(By.name("j_username"));
+        usernameInput.clear();
+        usernameInput.sendKeys(username);
+        WebElement passwordInput = driver.findElement(By.name("j_password"));
+        passwordInput.clear();
+        passwordInput.sendKeys(password);
+        WebElement login = driver.findElement(By.name("submit"));
+        login.click();
+    }
 }

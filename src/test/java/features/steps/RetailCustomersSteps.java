@@ -21,6 +21,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.runtime.PendingException;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -80,7 +81,7 @@ public class RetailCustomersSteps {
 
     @Then("^I should see Reading Type$")
     public void I_should_see_Reading_Type() throws Throwable {
-        assertTrue("ReadingType title missing", driver.getPageSource().contains("Energy Delivered (kWh)"));
+        assertTrue("ReadingType title missing", driver.getPageSource().contains("Type of Meter Reading Data"));
     }
 
     @Then("^I should see Interval Blocks$")
@@ -152,6 +153,9 @@ public class RetailCustomersSteps {
     public void I_look_at_my_usage_page() throws Throwable {
         WebElement usagePointLink = driver.findElement(By.linkText("Usage Points"));
         usagePointLink.click();
+
+        StepUtils.submitLoginForm(CucumberSession.getUsername(), StepUtils.PASSWORD);
+        clickByName("authorize");
     }
 
     @Then("^I should see Usage Point with title \"([^\"]*)\"$")
@@ -248,11 +252,16 @@ public class RetailCustomersSteps {
         CucumberSession.setUsername(StepUtils.newUsername());
 
         StepUtils.registerUser(CucumberSession.getUsername(), StepUtils.newFirstName(), StepUtils.newLastName(), StepUtils.PASSWORD);
-        CucumberSession.setUUID(UUID.fromString("7BC41774-7190-4864-841C-861AC76D46C2"));
+        CucumberSession.setUUID(UUID.fromString("48C2A019-5598-4E16-B0F9-49E4FF27F5FB"));
         StepUtils.addUsagePoint(CucumberSession.getUsername(), CucumberSession.getUUID().toString());
         StepUtils.importUsagePoint();
         StepUtils.logout();
-        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, CucumberSession.getUsername(), StepUtils.PASSWORD);
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, "alan", StepUtils.PASSWORD);
     }
 
+    @Then("^I should see Local Time Parameters$")
+    public void I_should_see_Local_Time_Parameters() throws Throwable {
+        assertContains("Local time zone offset from UTCTime");
+        assertContains("-18000");
+    }
 }
