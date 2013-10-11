@@ -26,11 +26,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.UUID;
+
 import static features.steps.StepUtils.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.*;
 
-public class RetailCustomerSteps {
+public class RetailCustomersSteps {
 
     private WebDriver driver = WebDriverSingleton.getInstance();
 
@@ -44,6 +48,68 @@ public class RetailCustomerSteps {
         driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/custodian/removealltokens");
 
         driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/logout.do");
+    }
+
+    @Then("^I should be logged in$")
+    public void I_should_be_logged_in() throws Throwable {
+        assertTrue(driver.getPageSource().contains("logout"));
+        assertFalse(driver.getPageSource().contains("login"));
+    }
+
+    @Then("^I should see the login form$")
+    public void I_should_see_the_login_form() throws Throwable {
+        assertTrue(driver.getPageSource().contains("Login"));
+    }
+
+    @When("^I select Usage Point$")
+    public void I_select_Usage_Point() throws Throwable {
+        WebElement usagePointLink = driver.findElement(By.linkText("Front Electric Meter"));
+        usagePointLink.click();
+    }
+
+    @When("^I select Meter Reading$")
+    public void I_select_Meter_Reading() throws Throwable {
+        WebElement usagePointLink = driver.findElement(By.linkText("Fifteen Minute Electricity Consumption"));
+        usagePointLink.click();
+    }
+
+    @Then("^I should see Meter Reading$")
+    public void I_should_see_Meter_Reading() throws Throwable {
+        assertTrue("MeterReading title missing", driver.getPageSource().contains("Fifteen Minute Electricity Consumption"));
+    }
+
+    @Then("^I should see Reading Type$")
+    public void I_should_see_Reading_Type() throws Throwable {
+        assertTrue("ReadingType title missing", driver.getPageSource().contains("Energy Delivered (kWh)"));
+    }
+
+    @Then("^I should see Interval Blocks$")
+    public void I_should_see_Interval_Blocks() throws Throwable {
+        assertTrue("Interval blocks missing", driver.getPageSource().contains("86400"));
+    }
+
+    @Then("^I should see Electric Power Usage Summary$")
+    public void I_should_see_Electric_Power_Usage_Summary() throws Throwable {
+        assertTrue(driver.getPageSource().contains("Usage Summary"));
+    }
+
+    @Then("^I should see Interval Readings$")
+    public void I_should_see_Interval_Readings() throws Throwable {
+        assertTrue(driver.getPageSource().contains("974"));
+        assertTrue(driver.getPageSource().contains("900"));
+        assertTrue(driver.getPageSource().contains("965"));
+    }
+
+    @Then("^I should see Reading Qualities$")
+    public void I_should_see_Reading_Qualities() throws Throwable {
+        WebElement element = driver.findElement(By.cssSelector(".reading-qualities"));
+
+        assertThat(element.getText(), containsString("8"));
+    }
+
+    @Then("^I should see Electric Power Quality Summary$")
+    public void I_should_see_Electric_Power_Quality_Summary() throws Throwable {
+        assertTrue(driver.getPageSource().contains("Quality Summary"));
     }
 
     @Given("^I have a Retail Customer account$")
@@ -100,7 +166,7 @@ public class RetailCustomerSteps {
         usernameInput.sendKeys("alan");
         WebElement passwordInput = driver.findElement(By.name("j_password"));
         passwordInput.clear();
-        passwordInput.sendKeys("koala");
+        passwordInput.sendKeys(StepUtils.PASSWORD);
         WebElement login = driver.findElement(By.name("submit"));
         login.click();
     }
@@ -171,4 +237,22 @@ public class RetailCustomerSteps {
         fillInByName("j_password", StepUtils.PASSWORD);
         clickByName("submit");
     }
+
+    @When("^I log in as a Data Custodian$")
+    public void I_login_as_a_Data_Custodian() throws Throwable {
+        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, StepUtils.CUSTODIAN_USERNAME, StepUtils.CUSTODIAN_PASSWORD);
+    }
+
+    @Given("^a Retail Customer with Usage Points$")
+    public void a_Retail_Customer_with_Usage_Points() throws Throwable {
+        CucumberSession.setUsername(StepUtils.newUsername());
+
+        StepUtils.registerUser(CucumberSession.getUsername(), StepUtils.newFirstName(), StepUtils.newLastName(), StepUtils.PASSWORD);
+        CucumberSession.setUUID(UUID.fromString("7BC41774-7190-4864-841C-861AC76D46C2"));
+        StepUtils.addUsagePoint(CucumberSession.getUsername(), CucumberSession.getUUID().toString());
+        StepUtils.importUsagePoint();
+        StepUtils.logout();
+        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, CucumberSession.getUsername(), StepUtils.PASSWORD);
+    }
+
 }

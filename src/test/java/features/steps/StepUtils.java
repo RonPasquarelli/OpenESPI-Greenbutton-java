@@ -16,10 +16,18 @@
 
 package features.steps;
 
+import org.energyos.espi.integration.utils.factories.FixtureFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.junit.Assert.assertTrue;
 
 public class StepUtils {
@@ -32,6 +40,8 @@ public class StepUtils {
     public static final String USERNAME = "alan";
     public static final String PASSWORD = "koala";
 
+    public static final String CUSTODIAN_USERNAME = "grace";
+    public static final String CUSTODIAN_PASSWORD = "koala";
 
     private static WebDriver driver = WebDriverSingleton.getInstance();;
 
@@ -58,6 +68,10 @@ public class StepUtils {
         login.click();
     }
 
+    public static void logout() {
+        driver.findElement(By.id("logout")).click();
+    }
+
     public static void selectRadioByLabel(String labelText) {
         driver.findElement(By.xpath("//label[contains(.,'" + labelText + "')]/input")).click();
     }
@@ -81,4 +95,87 @@ public class StepUtils {
     protected static void assertContains(String text) {
         assertTrue(driver.getPageSource().contains(text));
     }
+
+    public static void associate(String uuid, String description) {
+        clickLinkByPartialText("Add Usage Point");
+
+        WebElement uuidElement = driver.findElement(By.name("UUID"));
+        uuidElement.clear();
+        uuidElement.sendKeys(uuid);
+
+        WebElement descriptionElement = driver.findElement(By.id("description"));
+        descriptionElement.sendKeys(description);
+
+        WebElement create = driver.findElement(By.name("create"));
+        create.click();
+    }
+
+    public static void clickLinkByPartialText(String linkText) {
+        WebElement link = driver.findElement(By.partialLinkText(linkText));
+        link.click();
+    }
+
+    public static String newUsername() {
+        return "User" + System.currentTimeMillis();
+    }
+
+    public static void registerUser(String username, String firstName, String lastName, String password) {
+        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, StepUtils.CUSTODIAN_USERNAME, StepUtils.CUSTODIAN_PASSWORD);
+
+        clickLinkByText("Customer List");
+        clickLinkByPartialText("Add new customer");
+
+        assertTrue(driver.getPageSource().contains("New Retail Customer"));
+
+        WebElement form = driver.findElement(By.name("new_customer"));
+
+        WebElement usernameField = form.findElement(By.name("username"));
+        usernameField.sendKeys(username);
+
+        WebElement firstNameField = form.findElement(By.name("firstName"));
+        firstNameField.sendKeys(firstName);
+
+        WebElement lastNameField = form.findElement(By.name("lastName"));
+        lastNameField.sendKeys(lastName);
+
+        WebElement passwordField = form.findElement(By.name("password"));
+        passwordField.sendKeys(password);
+
+        WebElement create = form.findElement(By.name("create"));
+        create.click();
+
+        assertTrue(driver.getPageSource().contains("Retail Customers"));
+    }
+
+    public static String newLastName() {
+        return "Doe" + System.currentTimeMillis();
+    }
+
+    public static String newFirstName() {
+        return "John" + System.currentTimeMillis();
+    }
+
+    public static void importUsagePoint() throws IOException {
+        navigateTo(StepUtils.DATA_CUSTODIAN_CONTEXT, "/custodian/upload");
+        uploadUsagePoints();
+    }
+
+    public static void addUsagePoint(String username, String mrid) throws IOException {
+        navigateTo(StepUtils.DATA_CUSTODIAN_CONTEXT, "/custodian/retailcustomers");
+        clickLinkByText(username);
+        associate(mrid, "Front Electric Meter");
+    }
+
+    public static void uploadUsagePoints() throws IOException {
+        String xml = FixtureFactory.newUsagePointXML(CucumberSession.getUUID());
+        File tmpFile = File.createTempFile("usage_point", ".xml");
+        Files.copy(new ByteArrayInputStream(xml.getBytes()), Paths.get(tmpFile.getAbsolutePath()), REPLACE_EXISTING);
+
+        clickLinkByText("Upload");
+        WebElement file = driver.findElement(By.name("file"));
+        file.sendKeys(tmpFile.getAbsolutePath());
+        WebElement upload = driver.findElement(By.name("upload"));
+        upload.click();
+    }
+
 }

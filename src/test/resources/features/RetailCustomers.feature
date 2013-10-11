@@ -12,6 +12,21 @@ Feature: Retail Customers
     And I authorize Third Party
     Then I should see Usage Point with title "Front Electric Meter"
 
+  Scenario: Retail Customer views Usage Points with Meter Readings
+    Given a Retail Customer with Usage Points
+
+    When I look at my Usage Points page
+    And I select Usage Point
+    Then I should see Electric Power Usage Summary
+    Then I should see Electric Power Quality Summary
+
+    When I select Meter Reading
+    Then I should see Meter Reading
+    And I should see Reading Type
+    And I should see Interval Blocks
+    And I should see Interval Readings
+    And I should see Reading Qualities
+
   Scenario: Retail Customer denies Usage Points access
     Given I have a Retail Customer account
 
