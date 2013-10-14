@@ -93,7 +93,7 @@ public class StepUtils {
     }
 
     protected static void assertContains(String text) {
-        assertTrue(driver.getPageSource().contains(text));
+        assertTrue("Page source did not contain '" + text + "'", driver.getPageSource().contains(text));
     }
 
     public static void associate(String uuid, String description) {
