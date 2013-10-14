@@ -21,7 +21,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.PendingException;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,8 +29,6 @@ import org.openqa.selenium.WebElement;
 import java.util.UUID;
 
 import static features.steps.StepUtils.*;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
