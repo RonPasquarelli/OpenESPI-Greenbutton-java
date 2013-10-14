@@ -9,14 +9,16 @@ Feature: Retail Customers
     When I look at my Usage Points page
     And I authorize Third Party
 
-    Then I should see Usage Point with title "Front Electric Meter"
+    Then I should see a Usage Point
 
   Scenario: Retail Customer views Usage Points with Meter Readings
     Given a Retail Customer with Usage Points
 
     When I look at my Usage Points page
     And I authorize Third Party
-    And I select Usage Point
+    Then I should see a Usage Point
+
+    When I select Usage Point
     Then I should see Usage Point details
 
     When I select Meter Reading

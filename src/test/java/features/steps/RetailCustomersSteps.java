@@ -178,9 +178,9 @@ public class RetailCustomersSteps {
         assertNotNull("Password field missing", driver.findElement(By.name("j_password")));
     }
 
-    @Then("^I should see Usage Point with title \"([^\"]*)\"$")
-    public void I_should_see_my_Usage_Points_with_title(String title) throws Throwable {
-        assertTrue(driver.getPageSource().contains(title));
+    @Then("^I should see a Usage Point$")
+    public void I_should_see_a_Usage_Point() throws Throwable {
+        assertContains("Front Electric Meter");
     }
 
     @Then("^I should be redirected to the home page$")
