@@ -23,7 +23,7 @@ mvn clean install
 Start tomcat7 using maven:
 
 ```bash
-mvn tomcat7:run
+mvn -projects . tomcat7:run
 ```
 
 Now the applications should be available at:
