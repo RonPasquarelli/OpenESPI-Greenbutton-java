@@ -93,10 +93,3 @@ Feature: Retail Customers
     When I deny Third Party
     Then I should be redirected to the home page
 
-#  Scenario: Retail Customer views Usage Points with Meter Readings
-#    Given I have a Retail Customer account on the DataCustodian and the ThirdParty
-#    And I have energy usage information on the DataCustodian
-#
-#    When I log in to the Third Party
-#    And I look at my energy usage information
-#    Then I should see my energy usage information
