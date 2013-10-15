@@ -22,7 +22,7 @@ Feature: Retail Customers
     Then I should see Usage Point details
 
     When I select Meter Reading
-    Then I should see Meter Reading Details
+    Then I should see Meter Reading details
 
   Scenario: Retail Customer denies Usage Points access
     Given I have a Retail Customer account

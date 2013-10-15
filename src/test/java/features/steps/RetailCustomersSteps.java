@@ -206,8 +206,8 @@ public class RetailCustomersSteps {
         assertContains("ConEdison");
     }
 
-    @Then("^I should see Meter Reading Details$")
-    public void I_should_see_Meter_Reading_Details() throws Throwable {
+    @Then("^I should see Meter Reading details$")
+    public void I_should_see_Meter_Reading_details() throws Throwable {
         assertTrue("MeterReading title missing", driver.getPageSource().contains("Fifteen Minute Electricity Consumption"));
         assertTrue("ReadingType title missing", driver.getPageSource().contains("Type of Meter Reading Data"));
         assertTrue("Interval blocks missing", driver.getPageSource().contains("86400"));
