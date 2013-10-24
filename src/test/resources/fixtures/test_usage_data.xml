@@ -49,7 +49,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied.  See the License for the specific language governing 
 permissions and limitations under the License.
 -->
-    
+
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:espi="http://naesb.org/espi"  xsi:schemaLocation="http://naesb.org/espi espiDerived.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <id>urn:uuid:C5581F8A-53A8-422D-BB8A-B508B1F50DAE</id>
  <title>Green Button Subscription Feed</title>
@@ -57,7 +57,7 @@ permissions and limitations under the License.
  <updated>2012-03-15T04:00:00Z</updated>
  <link rel="self" href="/espi/1_1/resource/Subscription/83e269c1"/>
     <entry>
-    <id>urn:uuid:A72C87AC-124D-4EB3-9A7C-4DDB4CE823F1</id>
+    <id>urn:uuid:48C2A019-5598-4E16-B0F9-49E4FF27F5FB</id>
         <link rel="self" href="/espi/1_1/resource/RetailCustomer/9B6C7066/UsagePoint/5446AF3F"/>
         <link rel="up" href="/espi/1_1/resource/RetailCustomer/9B6C7066/UsagePoint"/>
         <link rel="related" href="/espi/1_1/resource/RetailCustomer/9B6C7066/UsagePoint/5446AF3F/MeterReading"/>
@@ -141,6 +141,9 @@ permissions and limitations under the License.
     </interval>
 <IntervalReading>
     <cost>944</cost>
+    <ReadingQuality>
+        <quality>8</quality>
+    </ReadingQuality>
     <timePeriod>
         <duration>900</duration>
         <start>1330578000</start>
@@ -150,6 +153,9 @@ permissions and limitations under the License.
 </IntervalReading>
 <IntervalReading>
     <cost>912</cost>
+    <ReadingQuality>
+        <quality>7</quality>
+    </ReadingQuality>
     <timePeriod>
         <duration>900</duration>
         <start>1330578900</start>
