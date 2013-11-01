@@ -17,6 +17,9 @@ public class CucumberSession {
     }
 
     public static UUID getUUID() {
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
         return uuid;
     }
 
