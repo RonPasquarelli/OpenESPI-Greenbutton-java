@@ -75,8 +75,14 @@ public class RetailCustomersSteps {
         StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, "alan", "koala");
     }
 
+    @When("^I log in as Retail Customer into Third Party$")
+    public void I_log_in_as_Retail_Customer_Data_Custodian() throws Throwable {
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, CucumberSession.getUsername(), "koala");
+    }
+
     @When("^I log in as Alan Turing into Third Party$")
     public void I_log_in_as_Alan_Turing_Third_Party() throws Throwable {
+        driver.get(StepUtils.THIRD_PARTY_BASE_URL + "/j_spring_security_logout");
         StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, "alan", "koala");
     }
 
@@ -96,7 +102,7 @@ public class RetailCustomersSteps {
         WebElement usagePointLink = driver.findElement(By.linkText("Usage Points"));
         usagePointLink.click();
 
-        StepUtils.submitLoginForm(CucumberSession.getUsername(), StepUtils.PASSWORD);
+//        StepUtils.submitLoginForm(CucumberSession.getUsername(), StepUtils.PASSWORD);
     }
 
     @When("^I select a Data Custodian from the list$")

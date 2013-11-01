@@ -56,16 +56,12 @@ public class StepUtils {
 
     public static void login(String context, String username, String password) {
         navigateTo(context, "/");
+        if (driver.findElements(By.id("logout")).size() > 0) {
+            logout();
+        }
         WebElement loginLink = driver.findElement(By.id("login"));
         loginLink.click();
-        WebElement usernameInput = driver.findElement(By.name("j_username"));
-        usernameInput.clear();
-        usernameInput.sendKeys(username);
-        WebElement passwordInput = driver.findElement(By.name("j_password"));
-        passwordInput.clear();
-        passwordInput.sendKeys(password);
-        WebElement login = driver.findElement(By.name("submit"));
-        login.click();
+        submitLoginForm(username, password);
     }
 
     public static void logout() {
@@ -157,7 +153,7 @@ public class StepUtils {
 
     public static void importUsagePoint() throws IOException {
         navigateTo(StepUtils.DATA_CUSTODIAN_CONTEXT, "/custodian/upload");
-        uploadUsagePoints();
+        uploadUsagePoints("Front Electric Meter");
     }
 
     public static void addUsagePoint(String username, String mrid) throws IOException {
@@ -166,8 +162,8 @@ public class StepUtils {
         associate(mrid, "Front Electric Meter");
     }
 
-    public static void uploadUsagePoints() throws IOException {
-        String xml = FixtureFactory.newUsagePointXML(CucumberSession.getUUID());
+    public static void uploadUsagePoints(String usagePointName) throws IOException {
+        String xml = FixtureFactory.newUsagePointXML(CucumberSession.getUUID(), usagePointName);
         File tmpFile = File.createTempFile("usage_point", ".xml");
         Files.copy(new ByteArrayInputStream(xml.getBytes()), Paths.get(tmpFile.getAbsolutePath()), REPLACE_EXISTING);
 
@@ -187,5 +183,10 @@ public class StepUtils {
         passwordInput.sendKeys(password);
         WebElement login = driver.findElement(By.name("submit"));
         login.click();
+    }
+
+    static void notifyThirdParty() {
+        login(DATA_CUSTODIAN_CONTEXT,"grace", "koala");
+        clickLinkByText("Notify Third Party");
     }
 }
