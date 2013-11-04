@@ -21,9 +21,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import java.awt.*;
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -188,5 +189,24 @@ public class StepUtils {
     static void notifyThirdParty() {
         login(DATA_CUSTODIAN_CONTEXT,"grace", "koala");
         clickLinkByText("Notify Third Party");
+    }
+
+    static void openPage() throws URISyntaxException, IOException {
+        Desktop.getDesktop().browse(new URI(driver.getCurrentUrl()));
+    }
+
+    static void saveAndOpenPage() throws IOException, URISyntaxException {
+        File file = new File("/tmp/cucumber.html");
+
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(driver.getPageSource());
+        bw.close();
+
+        Desktop.getDesktop().browse(new URI("file:///tmp/cucumber.html"));
     }
 }
