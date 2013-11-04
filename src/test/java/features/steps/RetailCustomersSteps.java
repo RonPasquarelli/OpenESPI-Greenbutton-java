@@ -21,7 +21,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.custommonkey.xmlunit.XMLUnit;
+import org.energyos.espi.integration.utils.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,7 +38,8 @@ public class RetailCustomersSteps {
 
     @Before
     public void setup() {
-        XMLUnit.getControlDocumentBuilderFactory().setNamespaceAware(false);
+        TestUtils.setupXMLUnit();
+
         driver.get(StepUtils.THIRD_PARTY_BASE_URL + "/j_spring_security_logout");
         driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/logout.do");
 
