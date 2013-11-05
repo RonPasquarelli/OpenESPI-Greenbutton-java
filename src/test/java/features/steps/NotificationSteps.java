@@ -19,27 +19,34 @@ package features.steps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 import static features.steps.StepUtils.*;
+import static org.junit.Assert.assertTrue;
 
 public class NotificationSteps {
+    private WebDriver driver = WebDriverSingleton.getInstance();
 
     @Given("^a Third Party with an updated subscription$")
     public void a_Third_Party_with_an_updated_subscription() throws Throwable {
-        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, StepUtils.USERNAME, StepUtils.PASSWORD);
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, CucumberSession.getUsername(), StepUtils.PASSWORD);
+
+        navigateTo(StepUtils.THIRD_PARTY_CONTEXT, "/batchLists");
+        CucumberSession.setNumberOfSubscriptions(driver.findElements(By.tagName("h2")).size());
+
         clickLinkByText("Data Custodians");
         clickByName("Data_custodian");
         clickByName("next");
-        submitLoginForm(StepUtils.USERNAME, StepUtils.PASSWORD);
+        submitLoginForm(CucumberSession.getUsername(), StepUtils.PASSWORD);
         clickByName("scope");
         clickByName("next");
         clickByName("authorize");
         clickLinkByText("Logout");
 
-        
-        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, "grace", "koala");
+        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, StepUtils.CUSTODIAN_USERNAME, StepUtils.CUSTODIAN_PASSWORD);
         uploadUsagePoints("Sweet Usage Point");
-        addUsagePoint("alan", CucumberSession.getUUID().toString());
+        addUsagePoint(CucumberSession.getUsername(), CucumberSession.getUUID().toString());
     }
 
     @When("^I notify the Third Party$")
@@ -49,8 +56,9 @@ public class NotificationSteps {
 
     @Then("^the Third Party should be notified of the update$")
     public void the_Third_Party_should_be_notified_of_the_update() throws Throwable {
-        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, "alan", "koala");
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, CucumberSession.getUsername(), PASSWORD);
         navigateTo(StepUtils.THIRD_PARTY_CONTEXT, "/batchLists");
-        assertContains("RetailCustomer/1/UsagePoint/6");
+        int numberOfSubscriptions = driver.findElements(By.tagName("h2")).size();
+        assertTrue(numberOfSubscriptions > CucumberSession.getNumberOfSubscriptions());
     }
 }

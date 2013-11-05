@@ -4,7 +4,8 @@ Feature: Notification
   So Third Party can download updated data
 
   Scenario: Data Custodian notifies Third Party of updated Subscription
-    Given a Third Party with an updated subscription
+    Given a Retail Customer with Usage Points
+    And a Third Party with an updated subscription
 
     When I notify the Third Party
 
