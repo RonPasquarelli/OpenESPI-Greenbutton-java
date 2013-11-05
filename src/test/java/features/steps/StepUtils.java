@@ -44,7 +44,7 @@ public class StepUtils {
     public static final String CUSTODIAN_USERNAME = "grace";
     public static final String CUSTODIAN_PASSWORD = "koala";
 
-    private static WebDriver driver = WebDriverSingleton.getInstance();;
+    private static WebDriver driver = WebDriverSingleton.getInstance();
 
     public static void navigateTo(String context, String path) {
         driver.get(StepUtils.BASE_URL + context + path);
@@ -67,6 +67,14 @@ public class StepUtils {
 
     public static void logout() {
         driver.findElement(By.id("logout")).click();
+    }
+
+    public static void logoutDataCustodian() {
+        driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/logout.do");
+    }
+
+    public static void logoutThirdParty() {
+        driver.get(StepUtils.THIRD_PARTY_BASE_URL + "/j_spring_security_logout");
     }
 
     public static void selectRadioByLabel(String labelText) {
@@ -116,8 +124,8 @@ public class StepUtils {
         return "User" + System.currentTimeMillis();
     }
 
-    public static void registerUser(String username, String firstName, String lastName, String password) {
-        StepUtils.login(StepUtils.DATA_CUSTODIAN_CONTEXT, StepUtils.CUSTODIAN_USERNAME, StepUtils.CUSTODIAN_PASSWORD);
+    public static void registerUser(String context, String username, String firstName, String lastName, String password) {
+        StepUtils.login(context, StepUtils.CUSTODIAN_USERNAME, StepUtils.CUSTODIAN_PASSWORD);
 
         clickLinkByText("Customer List");
         clickLinkByPartialText("Add new customer");
@@ -142,6 +150,14 @@ public class StepUtils {
         create.click();
 
         assertTrue(driver.getPageSource().contains("Retail Customers"));
+    }
+
+    public static void registerDataCustodianUser(String username, String firstName, String lastName, String password) {
+        registerUser(StepUtils.DATA_CUSTODIAN_CONTEXT, username, firstName, lastName, password);
+    }
+
+    public static void registerThirdPartyUser(String username, String firstName, String lastName, String password) {
+        registerUser(StepUtils.THIRD_PARTY_CONTEXT, username, firstName, lastName, password);
     }
 
     public static String newLastName() {
@@ -187,7 +203,7 @@ public class StepUtils {
     }
 
     static void notifyThirdParty() {
-        login(DATA_CUSTODIAN_CONTEXT,"grace", "koala");
+        login(DATA_CUSTODIAN_CONTEXT, CUSTODIAN_USERNAME, CUSTODIAN_PASSWORD);
         clickLinkByText("Notify Third Party");
     }
 

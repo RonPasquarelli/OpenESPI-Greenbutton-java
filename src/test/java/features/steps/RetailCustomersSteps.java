@@ -53,12 +53,16 @@ public class RetailCustomersSteps {
     public void a_Retail_Customer_with_Usage_Points() throws Throwable {
         CucumberSession.setUsername(StepUtils.newUsername());
 
-        StepUtils.registerUser(CucumberSession.getUsername(), StepUtils.newFirstName(), StepUtils.newLastName(), StepUtils.PASSWORD);
+        StepUtils.registerDataCustodianUser(CucumberSession.getUsername(), StepUtils.newFirstName(), StepUtils.newLastName(), StepUtils.PASSWORD);
         CucumberSession.setUUID(UUID.fromString("48C2A019-5598-4E16-B0F9-49E4FF27F5FB"));
         StepUtils.addUsagePoint(CucumberSession.getUsername(), CucumberSession.getUUID().toString());
         StepUtils.importUsagePoint();
-        StepUtils.logout();
-        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, "alan", StepUtils.PASSWORD);
+        StepUtils.logoutDataCustodian();
+
+        StepUtils.registerThirdPartyUser(CucumberSession.getUsername(), StepUtils.newFirstName(), StepUtils.newLastName(), StepUtils.PASSWORD);
+        StepUtils.logoutThirdParty();
+
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, CucumberSession.getUsername(), StepUtils.PASSWORD);
     }
 
     @Given("^I have a Retail Customer account$")
@@ -102,8 +106,6 @@ public class RetailCustomersSteps {
     public void I_look_at_my_usage_page() throws Throwable {
         WebElement usagePointLink = driver.findElement(By.linkText("Usage Points"));
         usagePointLink.click();
-
-//        StepUtils.submitLoginForm(CucumberSession.getUsername(), StepUtils.PASSWORD);
     }
 
     @When("^I select a Data Custodian from the list$")
@@ -115,7 +117,7 @@ public class RetailCustomersSteps {
 
     @When("^I log into Data Custodian$")
     public void I_log_into_Data_Custodian() throws Throwable {
-        fillInByName("j_username", StepUtils.USERNAME);
+        fillInByName("j_username", CucumberSession.getUsername());
         fillInByName("j_password", StepUtils.PASSWORD);
         clickByName("submit");
     }
@@ -128,7 +130,7 @@ public class RetailCustomersSteps {
 
     @When("^I log into Third Party$")
     public void I_log_into_Third_Party() throws Throwable {
-        fillInByName("j_username", StepUtils.USERNAME);
+        fillInByName("j_username", CucumberSession.getUsername());
         fillInByName("j_password", StepUtils.PASSWORD);
         clickByName("submit");
     }
@@ -244,5 +246,10 @@ public class RetailCustomersSteps {
     @Then("^I should see the login form$")
     public void I_should_see_the_login_form() throws Throwable {
         assertTrue(driver.getPageSource().contains("Login"));
+    }
+
+    @And("^I should see Data Custodian selection page$")
+    public void I_should_see_Data_Custodian_selection_page() throws Throwable {
+        assertTrue(driver.getCurrentUrl().endsWith("/DataCustodianList"));
     }
 }
