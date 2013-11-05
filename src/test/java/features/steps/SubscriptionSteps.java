@@ -36,7 +36,10 @@ public class SubscriptionSteps {
 
     @When("^I request a Subscription using the REST API$")
     public void I_request_a_Subscription_using_the_REST_API() throws Throwable {
-        driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/espi/1_1/resource/Subscription/1");
+        navigateTo(THIRD_PARTY_CONTEXT, "/RetailCustomer/1/AuthorizationList");
+        String subscriptionId = driver.findElement(By.cssSelector("#authorizations tr td.subscription_id a")).getText();
+
+        driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/espi/1_1/resource/Subscription/" + subscriptionId);
     }
 
     @Then("^I should receive XML for that Subscription$")
