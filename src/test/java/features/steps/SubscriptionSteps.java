@@ -53,6 +53,6 @@ public class SubscriptionSteps {
     public void I_should_see_a_list_of_Authorizations() throws Throwable {
         assertContains("Authorizations");
         assertThat(driver.findElement(By.cssSelector("#authorizations tr td.access_token")).getText(), not(isEmptyString()));
-
+        assertThat(driver.findElement(By.cssSelector("#authorizations tr td.subscription_id a")).getText(), not(isEmptyString()));
     }
 }
