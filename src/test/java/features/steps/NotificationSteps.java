@@ -30,11 +30,12 @@ public class NotificationSteps {
 
     @Given("^a Third Party with an updated subscription$")
     public void a_Third_Party_with_an_updated_subscription() throws Throwable {
-        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, CucumberSession.getUsername(), StepUtils.PASSWORD);
-
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, StepUtils.CUSTODIAN_USERNAME, PASSWORD);
         navigateTo(StepUtils.THIRD_PARTY_CONTEXT, "/batchLists");
         CucumberSession.setNumberOfSubscriptions(driver.findElements(By.tagName("h2")).size());
+        logoutThirdParty();
 
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, CucumberSession.getUsername(), StepUtils.PASSWORD);
         clickLinkByText("Data Custodians");
         clickByName("Data_custodian");
         clickByName("next");
@@ -56,7 +57,7 @@ public class NotificationSteps {
 
     @Then("^the Third Party should be notified of the update$")
     public void the_Third_Party_should_be_notified_of_the_update() throws Throwable {
-        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, CucumberSession.getUsername(), PASSWORD);
+        StepUtils.login(StepUtils.THIRD_PARTY_CONTEXT, StepUtils.CUSTODIAN_USERNAME, PASSWORD);
         navigateTo(StepUtils.THIRD_PARTY_CONTEXT, "/batchLists");
         int numberOfSubscriptions = driver.findElements(By.tagName("h2")).size();
         assertTrue(numberOfSubscriptions > CucumberSession.getNumberOfSubscriptions());
