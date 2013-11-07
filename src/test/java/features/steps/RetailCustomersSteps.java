@@ -201,7 +201,7 @@ public class RetailCustomersSteps {
     @Then("^I should see Scope selection screen$")
     public void I_should_see_Scope_selection_screen() throws Throwable {
         assertContains("Select Scope");
-        assertContains("FB_4_5_15_IntervalDuration_3600_BlockDuration_monthly_HistoryLength_13");
+        assertContains("FB=4_5_15;IntervalDuration=3600;BlockDuration=monthly;HistoryLength=13");
     }
 
     @Then("^I should see authorization screen$")
