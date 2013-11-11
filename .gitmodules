@@ -1,9 +1,9 @@
 [submodule "OpenESPI-DataCustodian-java"]
-	path = OpenESPI-DataCustodian-java
-	url = git@github.com:energyos/OpenESPI-DataCustodian-java.git
+        path = OpenESPI-DataCustodian-java
+        url = git://github.com/energyos/OpenESPI-DataCustodian-java.git
 [submodule "OpenESPI-ThirdParty-java"]
-	path = OpenESPI-ThirdParty-java
-	url = git@github.com:energyos/OpenESPI-ThirdParty-java.git
+        path = OpenESPI-ThirdParty-java
+        url = git://github.com/energyos/OpenESPI-ThirdParty-java.git
 [submodule "OpenESPI-Common-java"]
-	path = OpenESPI-Common-java
-	url = git@github.com:energyos/OpenESPI-Common-java.git
+        path = OpenESPI-Common-java
+        url = git://github.com/energyos/OpenESPI-Common-java.git
