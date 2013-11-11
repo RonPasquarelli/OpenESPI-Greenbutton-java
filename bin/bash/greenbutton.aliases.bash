@@ -9,6 +9,7 @@ about-alias 'general aliases'
 alias gb="cd ~/workspace/OpenESPI-Greenbutton-java"
 alias gbdc="cd ~/workspace/OpenESPI-Greenbutton-java/OpenESPI-DataCustodian-java"
 alias gbtp="cd ~/workspace/OpenESPI-Greenbutton-java/OpenESPI-ThirdParty-java"
+alias gbc="cd ~/workspace/OpenESPI-Greenbutton-java/OpenESPI-Common-java"
 alias eachsub="git submodule foreach"
 
 function fetch-all {

@@ -4,3 +4,6 @@
 [submodule "OpenESPI-ThirdParty-java"]
 	path = OpenESPI-ThirdParty-java
 	url = git@github.com:energyos/OpenESPI-ThirdParty-java.git
+[submodule "OpenESPI-Common-java"]
+	path = OpenESPI-Common-java
+	url = git@github.com:energyos/OpenESPI-Common-java.git

@@ -7,9 +7,10 @@
     <artifactId>IntegrationTests</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>OpenESPI Integration Tests</name>
+    <name>Integration Tests</name>
 
     <modules>
+        <module>OpenESPI-Common-java</module>
         <module>OpenESPI-DataCustodian-java</module>
         <module>OpenESPI-ThirdParty-java</module>
     </modules>
