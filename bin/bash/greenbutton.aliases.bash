@@ -8,7 +8,7 @@ about-alias 'general aliases'
 
 alias gbreload="bash-it disable alias greenbutton; bash-it enable alias greenbutton"
 alias morememory="export MAVEN_OPTS='-Xmx512m -XX:MaxPermSize=256m'"
-alias gogogo="gbc && mvn clean install && gbdc && mvn clean install && gbtp && mvn clean install && gb mvn clean install"
+alias gogogo="gbc && mvn clean install && gbdc && mvn clean install && gbtp && mvn clean install && gb && mvn clean install"
 
 alias gb="cd ~/workspace/OpenESPI-Greenbutton-java"
 alias gbdc="cd ~/workspace/OpenESPI-Greenbutton-java/OpenESPI-DataCustodian-java"
