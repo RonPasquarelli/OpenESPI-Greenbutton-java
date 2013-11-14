@@ -21,6 +21,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.energyos.espi.common.test.CucumberSession;
+import org.energyos.espi.common.test.WebDriverSingleton;
 import org.energyos.espi.integration.utils.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -4,10 +4,11 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.energyos.espi.common.test.BaseStepUtils;
 
 import static org.junit.Assert.assertTrue;
 
-public class OAuthSteps extends BaseSteps {
+public class OAuthSteps extends BaseStepUtils {
 
     @Before
     public void before() {
