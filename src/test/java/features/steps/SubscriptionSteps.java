@@ -38,7 +38,7 @@ public class SubscriptionSteps {
     @When("^I request a Subscription using the REST API$")
     public void I_request_a_Subscription_using_the_REST_API() throws Throwable {
         navigateTo(THIRD_PARTY_CONTEXT, "/RetailCustomer/1/AuthorizationList");
-        String subscriptionId = driver.findElement(By.cssSelector("#authorizations tr td.subscription_id a")).getText();
+        String subscriptionId = driver.findElement(By.cssSelector("#authorizations tr td.subscription_id")).getText();
 
         driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/espi/1_1/resource/Subscription/" + subscriptionId);
     }
@@ -57,6 +57,6 @@ public class SubscriptionSteps {
     public void I_should_see_a_list_of_Authorizations() throws Throwable {
         assertContains("Authorizations");
         assertThat(driver.findElement(By.cssSelector("#authorizations tr td.access_token")).getText(), not(isEmptyString()));
-        assertThat(driver.findElement(By.cssSelector("#authorizations tr td.subscription_id a")).getText(), not(isEmptyString()));
+        assertThat(driver.findElement(By.cssSelector("#authorizations tr td.subscription_id")).getText(), not(isEmptyString()));
     }
 }
