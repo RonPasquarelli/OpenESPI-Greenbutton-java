@@ -10,3 +10,7 @@ notifications:
     recipients:
       - greenbutton-dev@googlegroups.com
     on_success: change
+
+branches:
+  only:
+    - master
