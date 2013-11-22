@@ -7,6 +7,9 @@ import cucumber.api.java.en.When;
 import org.energyos.espi.common.test.WebDriverSingleton;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static features.steps.StepUtils.*;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
@@ -38,7 +41,8 @@ public class SubscriptionSteps {
     @When("^I request a Subscription using the REST API$")
     public void I_request_a_Subscription_using_the_REST_API() throws Throwable {
         navigateTo(THIRD_PARTY_CONTEXT, "/RetailCustomer/1/AuthorizationList");
-        String subscriptionId = driver.findElement(By.cssSelector("#authorizations tr td.subscription_id")).getText();
+        List<WebElement> rows = driver.findElements(By.cssSelector("#authorizations tr td.subscription_id"));
+        String subscriptionId = rows.get(rows.size() - 1).getText();
 
         driver.get(StepUtils.DATA_CUSTODIAN_BASE_URL + "/espi/1_1/resource/Subscription/" + subscriptionId);
     }

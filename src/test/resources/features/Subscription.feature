@@ -5,6 +5,7 @@ Feature: Subscription
 
   Scenario: Third Party accesses Subscription
     Given an authorized Third Party
+    And I log in as Alan Turing into Data Custodian
 
     When I log in as Alan Turing
     And I request a Subscription using the REST API
